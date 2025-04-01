@@ -1,6 +1,4 @@
-"use client";
-
-import React, {
+import {
   useCallback,
   useMemo,
   useRef,
@@ -11,9 +9,9 @@ import { createRoot } from "react-dom/client";
 import { AgGridReact } from "ag-grid-react";
 import "./styles.css";
 import {
-  ClientSideRowModelModule,
+  ClientSideRowModelModule, ColDef,
   ColumnAutoSizeModule,
-  ModuleRegistry,
+  ModuleRegistry, SizeColumnsToFitGridStrategy,
   ValidationModule,
 } from "ag-grid-community";
 ModuleRegistry.registerModules([
@@ -28,7 +26,7 @@ const GridExample = () => {
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
 
-  const [columnDefs, setColumnDefs] = useState([
+  const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { field: "athlete", width: 150, suppressSizeToFit: true },
     { field: "age", width: 50 },
     { colId: "country", field: "country", maxWidth: 300 },
@@ -36,7 +34,7 @@ const GridExample = () => {
     { field: "sport", width: 110 },
     { field: "gold", width: 100 },
   ]);
-  const autoSizeStrategy = useMemo(() => {
+  const autoSizeStrategy: SizeColumnsToFitGridStrategy = useMemo(() => {
     return {
       type: "fitGridWidth",
       defaultMinWidth: 100,
